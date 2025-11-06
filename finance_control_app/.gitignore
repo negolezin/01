@@ -1,0 +1,44 @@
+# Miscellaneous
+*.log
+*.lock
+.gradle/
+.packages
+.DS_Store
+.dart_tool/
+.idea/
+.packages
+.pub-cache/
+.pub/
+build/
+flutter_*.png
+linked_*
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+aot/
+output.json
+
+# Obfuscation related
+app.*.map.json
+
+# Android related
+android/
+**/android/local.properties
+**/android/key.properties
+
+# iOS/macOS related
+ios/
+macos/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/flutter_export_environment.sh
+
+# Coverage
+coverage/
