@@ -1,0 +1,76 @@
+name: Build Flutter artifacts
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: finance_control_app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Generate localization classes
+        run: flutter gen-l10n
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: finance-control-app-apk
+          path: finance_control_app/build/app/outputs/flutter-apk/app-release.apk
+
+  build-web:
+    name: Build Flutter Web bundle
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: finance_control_app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Generate localization classes
+        run: flutter gen-l10n
+
+      - name: Build web bundle
+        run: flutter build web --release
+
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: finance-control-app-web
+          path: |
+            finance_control_app/build/web/
