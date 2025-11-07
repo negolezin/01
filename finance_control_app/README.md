@@ -20,37 +20,47 @@ lib/
 ## Localização
 Arquivos `.arb` residem em `assets/translations`. A configuração do `l10n.yaml` permite gerar classes de localização personalizadas ao executar `flutter gen-l10n`.
 
-## Como executar localmente
-1. Instale o [Flutter SDK](https://docs.flutter.dev/get-started/install).
-2. Dentro do diretório `finance_control_app`, obtenha as dependências e gere o código necessário:
-   ```bash
-   flutter pub get
-   flutter pub run build_runner build --delete-conflicting-outputs
-   flutter gen-l10n
-   ```
-3. Execute o aplicativo em um dispositivo/emulador com:
-   ```bash
-   flutter run
-   ```
+## Como executar e compilar localmente
 
-## Como gerar artefatos de distribuição
-Para criar um APK de release localmente:
+### 1. Pré-requisitos
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) configurado no PATH.
+- Ferramentas de plataforma (Android Studio/SDK para gerar APK, Chrome para build web opcional).
+
+### 2. Clonar o repositório e acessar o projeto
+```bash
+git clone <url-do-repositorio>
+cd finance_control_app
+```
+
+### 3. Instalar dependências e gerar código necessário
+Execute estes comandos sempre que atualizar dependências, modelos Drift ou arquivos `.arb`:
 ```bash
 flutter pub get
 flutter pub run build_runner build --delete-conflicting-outputs
 flutter gen-l10n
+```
+
+### 4. Rodar o app em modo debug
+Conecte um dispositivo/emulador Android ou abra um Chrome e execute:
+```bash
+flutter run
+```
+
+### 5. Gerar artefatos de release
+
+#### APK Android
+```bash
 flutter build apk --release
 ```
-O arquivo será criado em `build/app/outputs/flutter-apk/app-release.apk`.
+Saída: `build/app/outputs/flutter-apk/app-release.apk`.
 
-Para gerar o bundle web estático:
+#### Bundle Web
 ```bash
-flutter pub get
-flutter pub run build_runner build --delete-conflicting-outputs
-flutter gen-l10n
 flutter build web --release
 ```
-Os arquivos finais ficarão em `build/web`.
+Saída: `build/web/` com arquivos estáticos para hospedagem.
+
+> Dica: caso altere o esquema de banco (Drift) ou traduções, repita o passo 3 antes de novos builds.
 
 ## Build automatizado (GitHub Actions)
 Este repositório inclui o workflow [`Build Flutter artifacts`](.github/workflows/build.yml), que:
